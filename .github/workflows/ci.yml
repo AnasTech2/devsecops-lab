@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  build:
+    name: CI build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Confirm workspace
+        run: |
+          echo "Files in repository:"
+          find . -maxdepth 2 | sort
+
+      - name: Validate HTML file exists
+        run: |
+          if [[ -f index.html ]]; then
+            echo "index.html is present"
+          else
+            echo "index.html is missing"
+            exit 1
+          fi
